@@ -42,13 +42,6 @@
     "stop_loss": 750
   },
   {
-    "symbol": "AXISBANK",
-    "token": "8454",
-    "target_buy": 1050,
-    "target_sell": 1100,
-    "stop_loss": 1030
-  },
-  {
     "symbol": "HINDUNILVR",
     "token": "1394",
     "target_buy": 2500,
