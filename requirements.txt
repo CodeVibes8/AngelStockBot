@@ -5,3 +5,4 @@ pyotp
 websocket-client
 logzero
 smartapi-python
+git+https://github.com/angel-one/smartapi-python
