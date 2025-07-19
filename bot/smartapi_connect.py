@@ -9,6 +9,11 @@ def login():
     data = obj.generateSession(
         clientCode=os.getenv("CLIENT_ID"),
         password=os.getenv("MPIN"),
-        totp=totp
+        totp=pyotp.TOTP(os.getenv("TOTP_SECRET")).now()
     )
+    print("CLIENT_ID:", os.getenv("CLIENT_ID"))
+    print("MPIN:", os.getenv("MPIN"))
+    print("TOTP:", pyotp.TOTP(os.getenv("TOTP_SECRET")).now())
+    print("API_KEY:", os.getenv("API_KEY"))
+
     return obj
