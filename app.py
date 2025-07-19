@@ -10,6 +10,7 @@ app = Flask(__name__)
 # Global variables
 cached_signals = []
 smart_api = None
+initialized = False  # NEW FLAG
 
 
 def load_config():
@@ -44,11 +45,16 @@ def refresh_signals():
         time.sleep(30)  # update every 30 seconds
 
 
-@app.before_first_request
-def init_bot():
-    load_config()
-    login()
-    threading.Thread(target=refresh_signals, daemon=True).start()
+# ✅ Replacement for before_first_request
+@app.before_request
+def run_once():
+    global initialized
+    if not initialized:
+        initialized = True
+        print("🚀 Initializing bot on first request...")
+        load_config()
+        login()
+        threading.Thread(target=refresh_signals, daemon=True).start()
 
 
 @app.route("/")
