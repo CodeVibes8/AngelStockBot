@@ -3,3 +3,4 @@ gunicorn
 requests
 SmartApi-python
 logzero
+websocket-client
