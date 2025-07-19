@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "RELIANCE",
+    "token": "2885",
+    "target_buy": 2800,
+    "target_sell": 2850,
+    "stop_loss": 2780
+  },
+  {
+    "symbol": "TCS",
+    "token": "11536",
+    "target_buy": 3700,
+    "target_sell": 3800,
+    "stop_loss": 3650
+  },
+  {
+    "symbol": "INFY",
+    "token": "1594",
+    "target_buy": 1450,
+    "target_sell": 1500,
+    "stop_loss": 1425
+  },
+  {
+    "symbol": "HDFCBANK",
+    "token": "1333",
+    "target_buy": 1600,
+    "target_sell": 1650,
+    "stop_loss": 1580
+  },
+  {
+    "symbol": "ICICIBANK",
+    "token": "4963",
+    "target_buy": 1100,
+    "target_sell": 1150,
+    "stop_loss": 1080
+  },
+  {
+    "symbol": "SBIN",
+    "token": "3045",
+    "target_buy": 770,
+    "target_sell": 800,
+    "stop_loss": 750
+  },
+  {
+    "symbol": "AXISBANK",
+    "token": "8454",
+    "target_buy": 1050,
+    "target_sell": 1100,
+    "stop_loss": 1030
+  },
+  {
+    "symbol": "HINDUNILVR",
+    "token": "1394",
+    "target_buy": 2500,
+    "target_sell": 2550,
+    "stop_loss": 2480
+  },
+  {
+    "symbol": "BAJFINANCE",
+    "token": "317",
+    "target_buy": 6900,
+    "target_sell": 7000,
+    "stop_loss": 6850
+  },
+  {
+    "symbol": "NIFTY",
+    "token": "99926009",
+    "target_buy": 24000,
+    "target_sell": 24500,
+    "stop_loss": 23800
+  }
+]

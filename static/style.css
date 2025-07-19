@@ -1,0 +1,6 @@
+body { margin:0; padding:20px; font-family:sans-serif; background:#121212; color:#eee; }
+.grid { display:flex; flex-wrap:wrap; gap:15px; justify-content:center; }
+.card { padding:20px; border-radius:8px; width:160px; text-align:center; }
+.card.buy { background:#0a3; }
+.card.sell { background:#a00; }
+.card.hold { background:#555; }

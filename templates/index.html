@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Stock Signals</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>📊 Intraday Signals</h1>
+  <div class="grid">
+    {% for s in signals %}
+    <div class="card {{ s.action.lower() }}">
+      <h2>{{ s.symbol }}</h2>
+      <p>₹{{ s.price }}</p>
+      <p>Signal: <b>{{ s.action }}</b></p>
+      <small>Buy ≤ {{ s.target_buy }} | Sell ≥ {{ s.target_sell }} | SL: {{ s.stop_loss }}</small>
+    </div>
+    {% endfor %}
+  </div>
+  <script>
+    setTimeout(() => { window.location.reload() }, 5000);
+  </script>
+</body>
+</html>
