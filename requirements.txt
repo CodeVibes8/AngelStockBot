@@ -1,6 +1,6 @@
 Flask
 gunicorn
 requests
-SmartApi-python
-logzero
+pyotp
 websocket-client
+smartapi-python
