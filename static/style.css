@@ -1,6 +1,102 @@
-body { margin:0; padding:20px; font-family:sans-serif; background:#121212; color:#eee; }
-.grid { display:flex; flex-wrap:wrap; gap:15px; justify-content:center; }
-.card { padding:20px; border-radius:8px; width:160px; text-align:center; }
-.card.buy { background:#0a3; }
-.card.sell { background:#a00; }
-.card.hold { background:#555; }
+/* Reset & Base Styles */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f0f;
+  color: #f1f1f1;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2em;
+  color: #00e5ff;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  width: 220px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.2s, box-shadow 0.3s;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Signal Colors */
+.card.buy {
+  background: linear-gradient(135deg, #00c853, #2e7d32);
+  border: 2px solid #00e676;
+}
+
+.card.sell {
+  background: linear-gradient(135deg, #d50000, #b71c1c);
+  border: 2px solid #ff5252;
+}
+
+.card.hold {
+  background: linear-gradient(135deg, #424242, #212121);
+  border: 2px solid #757575;
+}
+
+/* Text Styles */
+.card h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #fff;
+}
+
+.card .price {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ffd740;
+  margin: 10px 0;
+}
+
+.card .signal span {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.details p {
+  margin: 6px 0;
+  font-size: 0.9em;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #999;
+}
+
+.no-signals {
+  text-align: center;
+  color: #ff3d00;
+  font-size: 1.2em;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Grid */
+@media (max-width: 600px) {
+  .card {
+    width: 90%;
+  }
+}
