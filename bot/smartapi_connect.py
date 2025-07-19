@@ -4,7 +4,7 @@ import pyotp
 
 def login():
     obj = SmartConnect(api_key=os.getenv("CLIENT_ID"))
-    totp = pyotp.TOTP(os.getenv("TOTP_SECRET")).now()
+    totp = pyotp.TOTP(os.getenv("TOTP_KEY")).now()
 
     data = obj.generateSession(
         clientCode=os.getenv("CLIENT_ID"),
