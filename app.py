@@ -1,3 +1,7 @@
+from flask import app, render_template
+from bot import check_price, login
+
+
 @app.route("/")
 def show_signals():
     try:
@@ -8,7 +12,7 @@ def show_signals():
 
     signals = []
 
-    for stock in stocks:
+    for stock in stock:
         try:
             ltp = check_price(api, stock["symbol"], stock["token"])
             print(f"{stock['symbol']} → LTP: {ltp}")
