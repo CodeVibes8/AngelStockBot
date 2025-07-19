@@ -3,5 +3,5 @@ gunicorn
 requests
 pyotp
 websocket-client
-smartapi-python
 logzero
+smartapi-python
