@@ -1,20 +1,24 @@
+# bot/logic.py
 import json
 from .smartapi_connect import login
 
 def load_stocks():
-    return json.load(open("bot/stocks.json"))
+    with open("bot/stocks.json") as f:
+        return json.load(f)
 
 def get_signals():
     obj = login()
     signals = []
     for s in load_stocks():
         d = obj.ltpData("NSE", s["symbol"], s["token"])
-        if not d["status"]:
+        if not d.get("status"):
             continue
         price = d["data"]["ltp"]
-        action = ("BUY" if price <= s["target_buy"]
-                  else "SELL" if price >= s["target_sell"]
-                  else "HOLD")
+        action = (
+            "BUY" if price <= s["target_buy"]
+            else "SELL" if price >= s["target_sell"]
+            else "HOLD"
+        )
         signals.append({
             "symbol": s["symbol"],
             "price": price,

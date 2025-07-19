@@ -1,19 +1,27 @@
+# bot/smartapi_connect.py
 import os
 from SmartApi import SmartConnect
 import pyotp
+import json
+
+def load_config():
+    with open("config.json") as f:
+        config = json.load(f)
+        os.environ["API_KEY"] = config["api_key"]
+        os.environ["CLIENT_ID"] = config["client_id"]
+        os.environ["MPIN"] = config["mpin"]
+        os.environ["TOTP_SECRET"] = config["totp_secret"]
 
 def login():
-    obj = SmartConnect(api_key=os.getenv("CLIENT_ID"))
+    load_config()
+
+    obj = SmartConnect(api_key=os.getenv("API_KEY"))
     totp = pyotp.TOTP(os.getenv("TOTP_SECRET")).now()
 
-    data = obj.generateSession(
+    obj.generateSession(
         clientCode=os.getenv("CLIENT_ID"),
         password=os.getenv("MPIN"),
-        totp=pyotp.TOTP(os.getenv("TOTP_SECRET")).now()
+        totp=totp
     )
-    print("CLIENT_ID:", os.getenv("CLIENT_ID"))
-    print("MPIN:", os.getenv("MPIN"))
-    print("TOTP:", pyotp.TOTP(os.getenv("TOTP_SECRET")).now())
-    print("API_KEY:", os.getenv("API_KEY"))
 
     return obj
