@@ -1,3 +1,4 @@
-flask
-smartapi-python
-pyotp
+Flask
+gunicorn
+requests
+SmartApi-python
