@@ -1,5 +1,4 @@
-# app.py
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 import threading, time
 import os, json, pyotp
 from bot.logic import get_signals
@@ -12,7 +11,6 @@ cached_signals = []
 smart_api = None
 initialized = False  # NEW FLAG
 
-
 def load_config():
     with open("config.json") as f:
         config = json.load(f)
@@ -20,7 +18,6 @@ def load_config():
         os.environ["CLIENT_ID"] = config["client_id"]
         os.environ["MPIN"] = config["mpin"]
         os.environ["TOTP_SECRET"] = config["totp_secret"]
-
 
 def login():
     global smart_api
@@ -31,7 +28,6 @@ def login():
         totp=pyotp.TOTP(os.getenv("TOTP_SECRET")).now()
     )
     print("✅ Logged in successfully.")
-
 
 def refresh_signals():
     global cached_signals
@@ -44,8 +40,6 @@ def refresh_signals():
             print(f"❌ Error updating signals: {e}")
         time.sleep(30)  # update every 30 seconds
 
-
-# ✅ Replacement for before_first_request
 @app.before_request
 def run_once():
     global initialized
@@ -56,11 +50,13 @@ def run_once():
         login()
         threading.Thread(target=refresh_signals, daemon=True).start()
 
-
 @app.route("/")
 def home():
-    return render_template("index.html", signals=cached_signals)
+    return render_template("index.html")
 
+@app.route("/signals")
+def signals_api():
+    return jsonify(cached_signals)
 
 if __name__ == "__main__":
     app.run(debug=True)

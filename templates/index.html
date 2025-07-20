@@ -5,6 +5,16 @@
   <title>📊 Stock Signals Dashboard</title>
   <link rel="stylesheet" href="/static/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    pre {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
 
@@ -12,31 +22,45 @@
     <h1>📈 AngelStockBot - Intraday Signals</h1>
   </header>
 
-  <main class="grid">
-    {% if signals %}
-      {% for s in signals %}
-      <div class="card {{ s.action.lower() }}">
-        <h2>{{ s.symbol }}</h2>
-        <p class="price">₹{{ s.price }}</p>
-        <p class="signal">Signal: <span>{{ s.action }}</span></p>
-        <div class="details">
-          <p>📥 Buy ≤ <b>{{ s.target_buy }}</b></p>
-          <p>📤 Sell ≥ <b>{{ s.target_sell }}</b></p>
-          <p>⛔ SL: <b>{{ s.stop_loss }}</b></p>
-        </div>
-      </div>
-      {% endfor %}
-    {% else %}
-      <p class="no-signals">❌ No signals available (API login failed or empty list).</p>
-    {% endif %}
+  <main class="grid" id="signal-box">
+    <p>Loading signals...</p>
   </main>
 
   <footer>
-    <p>🔁 Auto-refresh every 5 seconds</p>
+    <p>🔀 Auto-updates every 30 seconds without refresh</p>
   </footer>
 
   <script>
-    setTimeout(() => { window.location.reload() }, 5000);
+    async function fetchSignals() {
+      try {
+        const res = await fetch('/signals');
+        const data = await res.json();
+
+        const box = document.getElementById("signal-box");
+        if (!data.length) {
+          box.innerHTML = '<p class="no-signals">❌ No signals available.</p>';
+          return;
+        }
+
+        box.innerHTML = data.map(s => `
+          <div class="card ${s.action.toLowerCase()}">
+            <h2>${s.symbol}</h2>
+            <p class="price">₹${s.price}</p>
+            <p class="signal">Signal: <span>${s.action}</span></p>
+            <div class="details">
+              <p>📅 Buy ≤ <b>${s.target_buy}</b></p>
+              <p>📄 Sell ≥ <b>${s.target_sell}</b></p>
+              <p>⛔ SL: <b>${s.stop_loss}</b></p>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        document.getElementById("signal-box").innerHTML = `<pre>❌ Error fetching signals:\n${err}</pre>`;
+      }
+    }
+
+    fetchSignals();
+    setInterval(fetchSignals, 30000); // every 30 seconds
   </script>
 </body>
 </html>
