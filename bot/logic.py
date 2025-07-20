@@ -4,18 +4,24 @@ import numpy as np
 from ta.trend import EMAIndicator
 from ta.momentum import RSIIndicator
 from ta.volatility import AverageTrueRange
+from datetime import datetime, timedelta
 
 def load_stocks():
     with open("bot/stocks.json") as f:
         return json.load(f)
 
-def get_historical_candles(obj, symbol, token, interval="5minute", days=5):
+def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE", days=5):
     try:
+        to_date = datetime.now()
+        from_date = to_date - timedelta(days=days)
+
         data = obj.getCandleData(
-            symboltoken=token,
-            interval=interval,
-            fromdate="2025-07-15 09:15",
-            todate="2025-07-19 15:30"
+            params={
+                "symboltoken": token,
+                "interval": interval,
+                "fromdate": from_date.strftime("%Y-%m-%d %H:%M"),
+                "todate": to_date.strftime("%Y-%m-%d %H:%M")
+            }
         )
 
         candles = data.get("data", [])
@@ -39,13 +45,11 @@ def get_signals(obj):
         symbol = stock["symbol"]
         token = stock["token"]
 
-        # Fetch historical candles
         df = get_historical_candles(obj, symbol, token)
         if df is None or len(df) < 50:
             continue
 
         try:
-            # Technical Indicators
             ema_20 = EMAIndicator(close=df["close"], window=20).ema_indicator()
             ema_50 = EMAIndicator(close=df["close"], window=50).ema_indicator()
             rsi = RSIIndicator(close=df["close"], window=14).rsi()
@@ -58,20 +62,17 @@ def get_signals(obj):
 
             latest = df.iloc[-1]
 
-            # Live price
             price = obj.ltpData(exchange="NSE", tradingsymbol=symbol, symboltoken=token)["data"]["ltp"]
 
             action = "HOLD"
             target = None
             stop_loss = None
 
-            # Buy condition
             if latest["ema_20"] > latest["ema_50"] and latest["rsi"] > 55:
                 action = "BUY"
                 target = round(price + 2 * latest["atr"], 2)
                 stop_loss = round(price - latest["atr"], 2)
 
-            # Sell condition
             elif latest["ema_20"] < latest["ema_50"] and latest["rsi"] < 45:
                 action = "SELL"
                 target = round(price - 2 * latest["atr"], 2)
