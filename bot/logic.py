@@ -10,18 +10,19 @@ def load_stocks():
     with open("bot/stocks.json") as f:
         return json.load(f)
 
-def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE", days=5):
+def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE"):
     try:
+        from datetime import datetime, timedelta
+
         to_date = datetime.now()
-        from_date = to_date - timedelta(days=days)
+        from_date = to_date - timedelta(days=5)
 
         data = obj.getCandleData(
-            params={
-                "symboltoken": token,
-                "interval": interval,
-                "fromdate": from_date.strftime("%Y-%m-%d %H:%M"),
-                "todate": to_date.strftime("%Y-%m-%d %H:%M")
-            }
+            interval=interval,
+            symboltoken=token,
+            exchange="NSE",
+            fromdate=from_date.strftime("%Y-%m-%d %H:%M"),
+            todate=to_date.strftime("%Y-%m-%d %H:%M")
         )
 
         candles = data.get("data", [])
@@ -34,9 +35,11 @@ def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE", days=5):
         df["low"] = pd.to_numeric(df["low"])
         df["volume"] = pd.to_numeric(df["volume"])
         return df
+
     except Exception as e:
         print(f"❌ Error fetching candle data for {symbol}: {e}")
         return None
+
 
 def get_signals(obj):
     signals = []
