@@ -76,6 +76,22 @@ h1 {
   font-size: 0.9em;
 }
 
+.details b {
+  color: #fff;
+}
+
+.card.buy .details b {
+  color: #00e676;
+}
+
+.card.sell .details b {
+  color: #ff5252;
+}
+
+.card.hold .details b {
+  color: #ccc;
+}
+
 footer {
   text-align: center;
   margin-top: 40px;

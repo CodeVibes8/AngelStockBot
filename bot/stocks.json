@@ -1,12 +1,13 @@
 [
-  { "symbol": "RELIANCE", "token": "999233" },
-  { "symbol": "TCS", "token": "345678" },
-  { "symbol": "INFY", "token": "123456" },
-  { "symbol": "HDFCBANK", "token": "678910" },
-  { "symbol": "ITC", "token": "223344" },
-  { "symbol": "TATAPOWER", "token": "334455" },
-  { "symbol": "BANKBARODA", "token": "556677" },
-  { "symbol": "IRCTC", "token": "445566" },
-  { "symbol": "ZOMATO", "token": "667788" },
-  { "symbol": "SAIL", "token": "778899" }
+  { "symbol": "RELIANCE", "token": "2885", "exchange": "NSE" },
+  { "symbol": "HDFCBANK", "token": "1333", "exchange": "NSE" },
+  { "symbol": "INFY", "token": "1594", "exchange": "NSE" },
+  { "symbol": "TCS", "token": "11536", "exchange": "NSE" },
+  { "symbol": "ICICIBANK", "token": "4963", "exchange": "NSE" },
+
+  { "symbol": "IDEA", "token": "12284", "exchange": "NSE" },
+  { "symbol": "SUZLON", "token": "2885", "exchange": "NSE" },
+  { "symbol": "YESBANK", "token": "305", "exchange": "NSE" },
+  { "symbol": "IRFC", "token": "11240", "exchange": "NSE" },
+  { "symbol": "NHPC", "token": "13914", "exchange": "NSE" }
 ]
