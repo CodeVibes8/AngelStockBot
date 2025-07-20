@@ -1,28 +1,28 @@
 import json
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
 from ta.trend import EMAIndicator
 from ta.momentum import RSIIndicator
 from ta.volatility import AverageTrueRange
-from datetime import datetime, timedelta
 
+# Load stock list from JSON
 def load_stocks():
     with open("bot/stocks.json") as f:
         return json.load(f)
 
-def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE"):
+# Fetch historical candle data using updated SmartAPI syntax
+def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE", days=5):
     try:
-        from datetime import datetime, timedelta
-
         to_date = datetime.now()
-        from_date = to_date - timedelta(days=5)
+        from_date = to_date - timedelta(days=days)
 
         data = obj.getCandleData(
-            interval=interval,
-            symboltoken=token,
             exchange="NSE",
-            fromdate=from_date.strftime("%Y-%m-%d %H:%M"),
-            todate=to_date.strftime("%Y-%m-%d %H:%M")
+            symboltoken=token,
+            interval=interval,
+            fromdate=from_date,
+            todate=to_date
         )
 
         candles = data.get("data", [])
@@ -35,12 +35,11 @@ def get_historical_candles(obj, symbol, token, interval="FIVE_MINUTE"):
         df["low"] = pd.to_numeric(df["low"])
         df["volume"] = pd.to_numeric(df["volume"])
         return df
-
     except Exception as e:
         print(f"❌ Error fetching candle data for {symbol}: {e}")
         return None
 
-
+# Main signal generation function
 def get_signals(obj):
     signals = []
 
@@ -53,29 +52,29 @@ def get_signals(obj):
             continue
 
         try:
-            ema_20 = EMAIndicator(close=df["close"], window=20).ema_indicator()
-            ema_50 = EMAIndicator(close=df["close"], window=50).ema_indicator()
-            rsi = RSIIndicator(close=df["close"], window=14).rsi()
-            atr = AverageTrueRange(high=df["high"], low=df["low"], close=df["close"], window=14).average_true_range()
-
-            df["ema_20"] = ema_20
-            df["ema_50"] = ema_50
-            df["rsi"] = rsi
-            df["atr"] = atr
+            # Indicators
+            df["ema_20"] = EMAIndicator(close=df["close"], window=20).ema_indicator()
+            df["ema_50"] = EMAIndicator(close=df["close"], window=50).ema_indicator()
+            df["rsi"] = RSIIndicator(close=df["close"], window=14).rsi()
+            df["atr"] = AverageTrueRange(high=df["high"], low=df["low"], close=df["close"], window=14).average_true_range()
 
             latest = df.iloc[-1]
 
-            price = obj.ltpData(exchange="NSE", tradingsymbol=symbol, symboltoken=token)["data"]["ltp"]
+            # Live price
+            price_data = obj.ltpData(exchange="NSE", tradingsymbol=symbol, symboltoken=token)
+            price = float(price_data["data"]["ltp"])
 
             action = "HOLD"
             target = None
             stop_loss = None
 
+            # Buy condition
             if latest["ema_20"] > latest["ema_50"] and latest["rsi"] > 55:
                 action = "BUY"
                 target = round(price + 2 * latest["atr"], 2)
                 stop_loss = round(price - latest["atr"], 2)
 
+            # Sell condition
             elif latest["ema_20"] < latest["ema_50"] and latest["rsi"] < 45:
                 action = "SELL"
                 target = round(price - 2 * latest["atr"], 2)

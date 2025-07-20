@@ -2,11 +2,11 @@
   { "symbol": "RELIANCE", "token": "999233" },
   { "symbol": "TCS", "token": "345678" },
   { "symbol": "INFY", "token": "123456" },
-  { "symbol": "HDFCBANK", "token": "1333" },
-  { "symbol": "ITC", "token": "1660" },
-  { "symbol": "TATAPOWER", "token": "2432" },
-  { "symbol": "BANKBARODA", "token": "2163" },
-  { "symbol": "IRCTC", "token": "3268" },
-  { "symbol": "ZOMATO", "token": "4501" },
-  { "symbol": "SAIL", "token": "3843" }
+  { "symbol": "HDFCBANK", "token": "678910" },
+  { "symbol": "ITC", "token": "223344" },
+  { "symbol": "TATAPOWER", "token": "334455" },
+  { "symbol": "BANKBARODA", "token": "556677" },
+  { "symbol": "IRCTC", "token": "445566" },
+  { "symbol": "ZOMATO", "token": "667788" },
+  { "symbol": "SAIL", "token": "778899" }
 ]
