@@ -4,7 +4,7 @@
   { "symbol": "INFY", "token": "1594", "exchange": "NSE" },
   { "symbol": "TCS", "token": "11536", "exchange": "NSE" },
   { "symbol": "ICICIBANK", "token": "4963", "exchange": "NSE" },
-
+  { "symbol": "TATAMOTORS", "Token": "3045", "exchange": "NSE" },
   { "symbol": "IDEA", "token": "12284", "exchange": "NSE" },
   { "symbol": "SUZLON", "token": "2885", "exchange": "NSE" },
   { "symbol": "YESBANK", "token": "305", "exchange": "NSE" },
