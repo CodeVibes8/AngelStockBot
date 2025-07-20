@@ -12,7 +12,6 @@ def load_stocks():
 def get_historical_candles(obj, symbol, token, interval="5minute", days=5):
     try:
         data = obj.getCandleData(
-            exchange="NSE",
             symboltoken=token,
             interval=interval,
             fromdate="2025-07-15 09:15",
