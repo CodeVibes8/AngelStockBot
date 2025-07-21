@@ -48,8 +48,7 @@
             <p class="price">₹${s.price}</p>
             <p class="signal">Signal: <span>${s.action}</span></p>
             <div class="details">
-              ${s.target_buy ? `<p>📅 Buy ≤ <b>${s.target_buy}</b></p>` : ""}
-              ${s.target_sell ? `<p>📄 Sell ≥ <b>${s.target_sell}</b></p>` : ""}
+              <p>🎯 Target: <b>${s.target}</b></p>
               <p>⛔ SL: <b>${s.stop_loss}</b></p>
             </div>
           </div>
