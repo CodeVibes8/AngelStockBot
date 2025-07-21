@@ -71,30 +71,32 @@ def get_signals(api):
             df["atr"] = AverageTrueRange(df["high"], df["low"], df["close"], window=14).average_true_range()
             latest = df.iloc[-1]
 
-            price = latest["close"]
-            rsi = latest["rsi"]
-            atr = latest["atr"]
+            price = round(latest["close"], 2)
+            rsi = round(latest["rsi"], 2)
+            atr = round(latest["atr"], 2)
+            ema = round(latest["ema"], 2)
+
             action = "HOLD"
             target = stop_loss = None
 
-            if price > latest["ema"] and rsi < 70:
+            if price > ema and rsi < 70:
                 action = "BUY"
                 target = round(price + atr, 2)
                 stop_loss = round(price - atr, 2)
-            elif price < latest["ema"] and rsi > 30:
+            elif price < ema and rsi > 30:
                 action = "SELL"
                 target = round(price - atr, 2)
                 stop_loss = round(price + atr, 2)
 
-            if action != "HOLD" and target and stop_loss:
+            if action != "HOLD":
                 signals.append({
                     "symbol": symbol,
-                    "price": round(price, 2),
+                    "price": price,
                     "action": action,
                     "target": target,
                     "stop_loss": stop_loss,
-                    "rsi": round(rsi, 2),
-                    "atr": round(atr, 2)
+                    "rsi": rsi,
+                    "atr": atr
                 })
 
         except Exception as e:
